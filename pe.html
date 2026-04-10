@@ -1,0 +1,300 @@
+ <!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>መልካም በዓል</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+  background-size: 600% 600%;
+  animation: bgMove 12s ease infinite;
+  color: white;
+  text-align: center;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.title {
+  font-size: 42px;
+  margin-top: 50px;
+  font-weight: bold;
+  animation: float 3s ease-in-out infinite;
+  background: linear-gradient(90deg, #00ffcc, #00ccff, #ffcc00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+/* ✅ FIXED GLOW FOR EMOJIS */
+.emoji {
+  display: inline-block;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #0ff, 0 0 15px #0ff;
+    transform: scale(1);
+  }
+  to {
+    text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
+    transform: scale(1.1);
+  }
+}
+
+.message {
+  margin: 30px auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 650px;
+  line-height: 1.8;
+  font-size: 17px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+}
+
+.btn {
+  margin-top: 25px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(90deg, #ff512f, #dd2476);
+  color: white;
+  cursor: pointer;
+}
+
+.popup {
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.8);
+}
+
+.popup-content {
+  margin:10% auto;
+  width:85%;
+  max-width:420px;
+  background:#111;
+  padding:20px;
+  border-radius:15px;
+}
+
+.star {
+  font-size: 28px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.star.active {
+  text-shadow: 0 0 15px gold;
+  transform: scale(1.3);
+}
+
+.comment-box {
+  margin-top: 10px;
+  padding: 10px;
+  width: 80%;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1">
+
+<div class="title">
+መልካም የ ትንሳኤ በአል
+</div>
+
+<div class="message">
+<span class="emoji">✨</span>ክርስቶስ ተንስአ እሙታን<br>
+<span class="emoji">✨</span>በዐቢይ ኃይል ወስልጣን<br>
+<span class="emoji">✨</span>አሰሮ ለሰይጣን<br>
+<span class="emoji">✨</span>አግኣዞ ለአዳም<br>
+<span class="emoji">🕊</span>ሰላም<span class="emoji">🌿</span><br>
+እምይዕዜሰ<br>
+ኮነ<br>
+<span class="emoji">🕊</span> ፍስሃ ወሰላም <span class="emoji">🕊</span><br><br>
+
+💚💛❤️ እንኳን ለጌታችን ለመድሀኒታችን ለእየሱስ ክርስቶስ ✝️
+በሰላም አደረሰን አደረሳችሁ 🙏🙏🙏
+</div>
+
+<div class="footer">
+from your friend Yonas 💙
+</div>
+
+<button class="btn" onclick="goNext()">Enter 🎉</button>
+
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" style="display:none; padding:20px;">
+
+<h2>Welcome 🎉</h2>
+
+<button class="btn" onclick="showPopup()">Press Me 😏</button>
+<button class="btn" onclick="goBack()">⬅ Back</button>
+
+<div id="popup" class="popup">
+  <div class="popup-content">
+
+    <button onclick="closePopup()" class="btn">EXIT ❌</button>
+
+    <p>
+I hope you enjoy your experience 😄✨ Now let’s make it more fun!<br>
+Follow the instructions 👇<br>
+1️⃣ Play the game 🎮<br>
+The rule is simple: if you find the number in 2 rounds, you get a gift 🎁<br>
+Don’t try to trick me—I know what you’re doing 🧐<br>
+2️⃣ Then you have to write your name and what you feel about it 🥺✍️<br>
+Be honest 🔪🙂<br>
+3️⃣ After that, rate my site 🙄😒<br>
+I hope you give me 5 ⭐<br>
+Good luck 🍀🔥
+</p>
+
+  </div>
+</div>
+
+<h3>🎮 GAME</h3>
+
+<input type="number" id="guess"><br>
+<button class="btn" onclick="checkGuess()">Guess</button>
+
+<div id="result"></div>
+
+<h3>Rate ⭐</h3>
+
+<span class="star" onclick="rate(1)">⭐</span>
+<span class="star" onclick="rate(2)">⭐</span>
+<span class="star" onclick="rate(3)">⭐</span>
+<span class="star" onclick="rate(4)">⭐</span>
+<span class="star" onclick="rate(5)">⭐</span>
+
+<div id="ratingMsg"></div>
+
+<!-- 💬 COMMENT SECTION -->
+<h3>💬 Comment Section</h3>
+ <form action="https://formspree.io/f/xgopjwva" method="POST">
+  <input class="comment-box" name="name" placeholder="Your name" required><br><br>
+  <textarea class="comment-box" name="message" placeholder="Write your comment..." required></textarea><br>
+  <button class="btn" type="submit">Post 💬</button>
+</form>
+
+<!-- 🇪🇹 BACK AMHARIC MESSAGE (RESTORED) -->
+<div class="message">
+💚💛❤️ እንኳን በሰላም አደረሳችሁ<br><br>
+ከውድ ጉዋደኛቹ ዮናስ 🙏<br>
+መልካም በዓል ✨
+</div>
+
+</div>
+
+<script>
+
+function goNext(){
+  document.getElementById("page1").style.display="none";
+  document.getElementById("page2").style.display="block";
+}
+
+function goBack(){
+  document.getElementById("page2").style.display="none";
+  document.getElementById("page1").style.display="block";
+}
+
+function showPopup(){
+  document.getElementById("popup").style.display="block";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
+
+/* GAME FIXED VIBES */
+let number = Math.floor(Math.random()*10)+1;
+let round = 1;
+let tries = 0;
+
+function checkGuess(){
+
+  let input = document.getElementById("guess").value;
+
+  if(input === ""){
+    document.getElementById("result").innerHTML = "⚠️ enter number first 😭";
+    return;
+  }
+
+  let g = Number(input);
+  tries++;
+
+  if(g === number){
+    document.getElementById("result").innerHTML = "🏆🔥 YOU WIN!! PERFECT GUESS 🎉😎";
+    return;
+  }
+
+  let diff = Math.abs(g - number);
+
+  if(diff === 1){
+    document.getElementById("result").innerHTML = "😱 SO CLOSE!! 💥🔥";
+  } 
+  else if(diff <= 3){
+    document.getElementById("result").innerHTML = "😳 CLOSE VIBES 👀🔥";
+  } 
+  else if(diff <= 6){
+    document.getElementById("result").innerHTML = "📉 FAR LOW BRO 😂💀";
+  } 
+  else {
+    document.getElementById("result").innerHTML = "📈 FAR HIGH BRO 🥶💀";
+  }
+
+  if(tries >= 5){
+    if(round === 1){
+      round = 2;
+      tries = 0;
+      document.getElementById("guess").value = "";
+      document.getElementById("result").innerHTML = "🔁 ROUND 2 START 😤🔥 LAST CHANCE!";
+    } else {
+      document.getElementById("result").innerHTML = "💀 GAME OVER!! number was " + number;
+    }
+  }
+}
+
+/* RATE */
+function rate(s){
+  let stars = document.querySelectorAll(".star");
+
+  stars.forEach((st,i)=>{
+    st.classList.toggle("active", i < s);
+  });
+
+  let msg = "";
+  if(s==1) msg="😭 WHY BRO WHY 💔";
+  if(s==2) msg="🙄😒 yoo you have problem with me?";
+  if(s==3) msg="😡🔪 make it up!";
+  if(s==4) msg="😃 just 1 more man!";
+  if(s==5) msg="😎 THANKS!! I DESERVE IT 🔥";
+
+  document.getElementById("ratingMsg").innerHTML = msg;
+}
+
+</script>
+
+</body>
+</html>
