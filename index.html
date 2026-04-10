@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="am">
 <head>
 <meta charset="UTF-8">
@@ -110,7 +110,6 @@ body {
   border-radius: 10px;
 }
 
-/* ⭐ SHINY COMPANY LOGO (UNCHANGED) */
 .company-logo {
   font-weight: bold;
   font-size: 22px;
@@ -270,7 +269,8 @@ function closePopup(){
   document.getElementById("popup").style.display="none";
 }
 
-let number = Math.floor(Math.random()*10)+1;
+/* 🔥 ONLY CHANGE = HARD MODE 1–100 */
+let number = Math.floor(Math.random()*100)+1;
 let tries = 0;
 
 function checkGuess(){
@@ -289,16 +289,10 @@ function checkGuess(){
     return;
   }
 
-  let diff = Math.abs(g - number);
-
-  if(diff === 1){
-    document.getElementById("result").innerHTML = "😱 SO CLOSE!! 💥🔥";
-  } else if(diff <= 3){
-    document.getElementById("result").innerHTML = "😳 CLOSE VIBES 👀🔥";
-  } else if(diff <= 6){
-    document.getElementById("result").innerHTML = "📉 FAR LOW 😂💀";
+  if(g < number){
+    document.getElementById("result").innerHTML = "📉 Too LOW ("+tries+"/5)";
   } else {
-    document.getElementById("result").innerHTML = "📈 FAR HIGH 🥶💀";
+    document.getElementById("result").innerHTML = "📈 Too HIGH ("+tries+"/5)";
   }
 
   if(tries >= 5){
