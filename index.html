@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+[4/10/2026 12:35 AM] 🚩: <!DOCTYPE html>
 <html lang="am">
 <head>
 <meta charset="UTF-8">
@@ -38,7 +38,6 @@ body {
   100% { transform: translateY(0px); }
 }
 
-/* ✅ FIXED GLOW FOR EMOJIS */
 .emoji {
   display: inline-block;
   animation: glow 1.5s infinite alternate;
@@ -110,6 +109,30 @@ body {
   width: 80%;
   border-radius: 10px;
 }
+
+/* ⭐ SHINY COMPANY LOGO (UNCHANGED) */
+.company-logo {
+  font-weight: bold;
+  font-size: 22px;
+  background: linear-gradient(90deg, #00ffcc, #00ccff, #ff00ff, #ffff00, #00ffcc);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shinyMove 2.5s linear infinite, glowPulse 1.5s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(0,255,255,0.8);
+}
+
+@keyframes shinyMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glowPulse {
+  0% { filter: drop-shadow(0 0 5px #00ffff); }
+  50% { filter: drop-shadow(0 0 20px #ff00ff); }
+  100% { filter: drop-shadow(0 0 5px #00ffff); }
+}
 </style>
 </head>
 
@@ -156,8 +179,7 @@ from your friend Yonas 💙
   <div class="popup-content">
 
     <button onclick="closePopup()" class="btn">EXIT ❌</button>
-
-    <p>
+[4/10/2026 12:35 AM] 🚩: <p>
 I hope you enjoy your experience 😄✨ Now let’s make it more fun!<br>
 Follow the instructions 👇<br>
 1️⃣ Play the game 🎮<br>
@@ -168,7 +190,7 @@ Be honest 🔪🙂<br>
 3️⃣ After that, rate my site 🙄😒<br>
 I hope you give me 5 ⭐<br>
 Good luck 🍀🔥
-</p>
+    </p>
 
   </div>
 </div>
@@ -192,23 +214,44 @@ Good luck 🍀🔥
 
 <!-- 💬 COMMENT SECTION -->
 <h3>💬 Comment Section</h3>
- <form action="https://formspree.io/f/xgopjwva" method="POST">
+
+<form action="https://formspree.io/f/xgopjwva" method="POST">
   <input class="comment-box" name="name" placeholder="Your name" required><br><br>
   <textarea class="comment-box" name="message" placeholder="Write your comment..." required></textarea><br>
   <button class="btn" type="submit">Post 💬</button>
 </form>
 
-<!-- 🇪🇹 BACK AMHARIC MESSAGE (RESTORED) -->
 <div class="message">
 💚💛❤️ እንኳን በሰላም አደረሳችሁ<br><br>
 ከውድ ጉዋደኛቹ ዮናስ 🙏<br>
 መልካም በዓል ✨
 </div>
 
+<!-- ✅ ADDED SECTION -->
+<div class="message">
+<h3>💼 Our Mini Website Services</h3>
+
+We create custom mini celebration websites for:<br><br>
+
+🎉 ልደት (Birthday)<br>
+🎓 ምርቃት (Graduation)<br>
+💍 ሠርግ (Wedding)<br>
+👶 ክርስትና (Christening)<br>
+❤️ ፍቅር ጥያቄ (Love Proposal)<br>
+🎊 በዓል / Special Events<br>
+✨ and many more...<br><br>
+
+We make it fun, animated, and personalized just for you 😎🔥<br><br>
+
+🏢 Company Name: <span class="company-logo">NEXAsoftwaresolutions</span><br><br>
+
+📩 Contact us on Telegram:<br>
+@jonas64add
+</div>
+
 </div>
 
 <script>
-
 function goNext(){
   document.getElementById("page1").style.display="none";
   document.getElementById("page2").style.display="block";
@@ -227,13 +270,10 @@ function closePopup(){
   document.getElementById("popup").style.display="none";
 }
 
-/* GAME FIXED VIBES */
 let number = Math.floor(Math.random()*10)+1;
-let round = 1;
 let tries = 0;
 
 function checkGuess(){
-
   let input = document.getElementById("guess").value;
 
   if(input === ""){
@@ -245,7 +285,7 @@ function checkGuess(){
   tries++;
 
   if(g === number){
-    document.getElementById("result").innerHTML = "🏆🔥 YOU WIN!! PERFECT GUESS 🎉😎";
+    document.getElementById("result").innerHTML = "🏆🔥 YOU WIN!! 🎉😎";
     return;
   }
 
@@ -253,47 +293,34 @@ function checkGuess(){
 
   if(diff === 1){
     document.getElementById("result").innerHTML = "😱 SO CLOSE!! 💥🔥";
-  } 
-  else if(diff <= 3){
+  } else if(diff <= 3){
     document.getElementById("result").innerHTML = "😳 CLOSE VIBES 👀🔥";
-  } 
-  else if(diff <= 6){
-    document.getElementById("result").innerHTML = "📉 FAR LOW BRO 😂💀";
-  } 
-  else {
-    document.getElementById("result").innerHTML = "📈 FAR HIGH BRO 🥶💀";
+  } else if(diff <= 6){
+    document.getElementById("result").innerHTML = "📉 FAR LOW 😂💀";
+  } else {
+    document.getElementById("result").innerHTML = "📈 FAR HIGH 🥶💀";
   }
 
   if(tries >= 5){
-    if(round === 1){
-      round = 2;
-      tries = 0;
-      document.getElementById("guess").value = "";
-      document.getElementById("result").innerHTML = "🔁 ROUND 2 START 😤🔥 LAST CHANCE!";
-    } else {
-      document.getElementById("result").innerHTML = "💀 GAME OVER!! number was " + number;
-    }
+    document.getElementById("result").innerHTML = "💀 GAME OVER!! number was " + number;
   }
 }
 
-/* RATE */
 function rate(s){
   let stars = document.querySelectorAll(".star");
-
   stars.forEach((st,i)=>{
     st.classList.toggle("active", i < s);
   });
 
   let msg = "";
-  if(s==1) msg="😭 WHY BRO WHY 💔";
-  if(s==2) msg="🙄😒 yoo you have problem with me?";
-  if(s==3) msg="😡🔪 make it up!";
-  if(s==4) msg="😃 just 1 more man!";
-  if(s==5) msg="😎 THANKS!! I DESERVE IT 🔥";
+  if(s==1) msg="😭";
+  if(s==2) msg="🙄";
+  if(s==3) msg="😐";
+  if(s==4) msg="😃";
+  if(s==5) msg="😎 THANKS!";
 
   document.getElementById("ratingMsg").innerHTML = msg;
 }
-
 </script>
 
 </body>
