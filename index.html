@@ -6,6 +6,7 @@
 <title>መልካም በዓል</title>
 
 <style>
+/* CSS remains largely the same, added one for the auto-popup */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -69,6 +70,14 @@ body {
   color: white;
   cursor: pointer;
   font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover { transform: scale(1.05); }
+
+.explain-btn {
+  background: linear-gradient(90deg, #f093fb, #f5576c);
+  margin-bottom: 10px;
 }
 
 .about-btn {
@@ -88,16 +97,17 @@ body {
 }
 
 .popup-content {
-  margin:5% auto;
+  margin:10% auto;
   width:85%;
-  max-width:420px;
+  max-width:450px;
   background:#111;
-  padding:20px;
+  padding:25px;
   border-radius:15px;
   border: 1px solid #444;
   position: relative;
   max-height: 80vh;
   overflow-y: auto;
+  box-shadow: 0 0 30px rgba(0,255,204,0.2);
 }
 
 .close-x {
@@ -110,7 +120,7 @@ body {
 }
 
 .star {
-  font-size: 28px;
+  font-size: 32px;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -144,22 +154,6 @@ body {
   100% { background-position: 100% 50%; }
 }
 
-#history-content {
-    display: none;
-    text-align: left;
-    background: rgba(0,0,0,0.8);
-    padding: 15px;
-    border-radius: 10px;
-    margin: 15px auto;
-    width: 85%;
-    font-size: 13px;
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-/* Page Style for Quiz Section */
 .quiz-container {
     text-align: left;
     background: rgba(255,255,255,0.08);
@@ -172,11 +166,22 @@ body {
 .quiz-q { margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 15px; }
 .ans-btn { display: block; width: 100%; text-align: left; margin: 8px 0; padding: 12px; background: #222; border: 1px solid #444; color: white; cursor: pointer; border-radius: 8px; transition: 0.3s; }
 .ans-btn:hover { border-color: #00ffcc; background: #2a2a2a; }
-.explanation-box { margin-top: 10px; padding: 10px; border-radius: 5px; background: rgba(255, 81, 47, 0.1); border-left: 4px solid #ff512f; font-size: 14px; display: none; }
+.explanation-box { margin-top: 10px; padding: 10px; border-radius: 5px; background: rgba(0, 0, 0, 0.4); border-left: 4px solid #00ffcc; font-size: 14px; display: none; line-height: 1.5; }
+
+.grade-box {
+    background: linear-gradient(135deg, #111, #222);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid gold;
+    margin: 20px auto;
+    width: 85%;
+    display: none;
+}
+#score-summary { font-size: 26px; font-weight: bold; color: #00ffcc; margin-bottom: 10px; }
 </style>
 </head>
 
-<body onload="updateDBView()">
+<body>
 
 <div id="page1">
     <div class="title">መልካም የ ትንሳኤ በአል</div>
@@ -189,41 +194,64 @@ body {
         እምይዕዜሰ ኮነ <span class="emoji">🕊</span> ፍስሃ ወሰላም <span class="emoji">🕊</span><br><br>
         💚💛❤️ እንኳን ለጌታችን ለመድሀኒታችን ለእየሱስ ክርስቶስ ✝️ትንሣኤ በሰላም አደረሰን አደረሳችሁ 🙏🙏🙏
     </div>
-    <div class="footer">from your friend Yonas 💙</div>
+    <div class="footer" style="margin-bottom: 20px;">from your friend Yonas 💙</div>
+    
+    <button class="btn explain-btn" onclick="showPopup('appExplainPopup')">የድህረ ገጹ ዝርዝር መመሪያ (User Guide) 📖</button><br>
     <button class="btn" onclick="goPage(2)">Enter to next page 🎉</button>
+
+    <div id="appExplainPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-x" onclick="closePopup('appExplainPopup')">&times;</span>
+            <h3 style="color: #00ffcc; border-bottom: 1px solid #333; padding-bottom: 10px;">የአጠቃቀም መመሪያ</h3>
+            <p style="text-align: left; font-size: 14px; line-height: 1.7; color: #ddd;">
+                እንኳን ወደዚህ የበዓል ገጽ በደህና መጡ! ድህረ ገጹ የሚከተሉትን ዋና ዋና ክፍሎች ይዟል፦<br><br>
+                <b>1. የእውቀት መፈተኛ (Quiz Zone):</b> <br>ቀጣዩ ገጽ ላይ 30 ጥልቀት ያላቸው የትንሳኤ ጥያቄዎችን ያገኛሉ። እያንዳንዱ ጥያቄ ትክክለኛውን መልስ እና ዝርዝር መጽሐፍ ቅዱሳዊ ማብራሪያ ይዟል። ለውጤትዎም ደረጃ ይሰጥዎታል!<br><br>
+                <b>2. የመዝናኛ ቀጠና (Fun Zone):</b> <br>እዚህ ጋር ቁጥር የመገመት ጨዋታ አለ። አእምሮዎን ተጠቅመው በ 2 ዙር ውስጥ ካሸነፉ ልዩ የሽልማት መጠየቂያ ፎርም ይከፈትልዎታል።<br><br>
+                <b>3. ግብረ-መልስ (Rating & Feedback):</b> <br>ለሰራሁት ስራ የኮከብ ደረጃ ይስጡኝ። ኮከብ ሲሰጡ የሚመጣውን ማሳሰቢያ ተከትለው አስተያየትዎን ያስፍሩ።<br><br>
+                <b>4. ስለ እኛ (About):</b> <br>ተመሳሳይ የሆኑ ልዩ የልደት፣ የምርቃት እና የሰርግ ድህረ ገጾችን ማሰራት ከፈለጉ የ "About" ክፍልን ይመልከቱ።
+            </p>
+            <button onclick="closePopup('appExplainPopup')" class="btn">ሁሉንም ተረዳሁ - ወደ ጨዋታው! 🚀</button>
+        </div>
+    </div>
 </div>
 
 <div id="page2" style="display:none; padding:20px;">
     <div class="title" style="font-size: 30px;">⛪ የትንሳኤ እውቀት መፈተኛ</div>
     
-    <button class="btn about-btn" style="width: 90%; margin-bottom: 20px;" onclick="showPopup('fasikaPopup')">ስለ ፋሲካ በአል ትርጉም 📖</button>
-    
-    <div id="fasikaPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-x" onclick="closePopup('fasikaPopup')">&times;</span>
-            <h3>የፋሲካ (ትንሳኤ) ጥልቅ ትርጉም</h3>
-            <p style="text-align: justify; line-height: 1.6;">
-                ፋሲካ "ማለፍ" ማለት ነው። ይህም የእስራኤል ልጆች ከግብፅ ባርነት ወደ ነጻነት መሻገራቸውን እንዲሁም ጌታችን ኢየሱስ ክርስቶስ እኛን ከሞት ወደ ሕይወት፣ ከጨለማ ወደ ብርሃን ያሻገረበትን ታላቅ ምስጢር ይወክላል።<br><br>
-                በኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን፣ ትንሳኤ ከበዓላት ሁሉ በላይ "በዓለ በዓላት" ተብሎ ይጠራል። ለ55 ቀናት የሚቆየው የዐቢይ ጾም ተጠናቆ አማኞች በነጭ ልብስና በታላቅ ዝማሬ በአሉን ያከብራሉ።
-            </p>
-            <button onclick="closePopup('fasikaPopup')" class="btn">ተረዳሁ</button>
-        </div>
+    <div id="quiz-result-area" class="grade-box">
+        <h3>📊 የፈተናው ውጤት</h3>
+        <div id="score-summary">ውጤት: 0/30</div>
+        <p id="grade-comment" style="font-size: 18px; color: gold;"></p>
+        <button class="btn" onclick="resetQuiz()">ድጋሚ ፈትን 🔄</button>
     </div>
 
+    <button class="btn about-btn" style="width: 90%; margin-bottom: 20px;" onclick="showPopup('fasikaPopup')">ስለ ፋሲካ በአል ትርጉም 📖</button>
+    
     <div class="quiz-container">
-        <h3>🧠 ፈታኝ የፋሲካ ጥያቄዎች</h3>
-        <p style="font-size: 13px; color: #aaa;">መልሱን ካሳሳቱ ማብራሪያው ይታይዎታል!</p>
+        <div id="progress-bar" style="text-align:right; font-size:12px; color:#aaa; margin-bottom: 10px;">ጥያቄ: 1/30</div>
+        <h3>🧠 30 ፈታኝ ጥያቄዎች</h3>
         <hr style="border: 0.5px solid #444;">
         <div id="quiz-box"></div>
     </div>
 
     <button class="btn" onclick="goPage(1)">⬅ Back to Home</button>
-    <button class="btn" style="background: #28a745;" onclick="goPage(3)">Go to Fun Zone & Game 🎮</button>
+    <button class="btn" style="background: #28a745;" onclick="goPage(3)">Go to Fun Zone 🎮</button>
+
+    <div id="fasikaPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-x" onclick="closePopup('fasikaPopup')">&times;</span>
+            <h3>የፋሲካ (ትንሳኤ) ጥልቅ ትርጉም</h3>
+            <p style="text-align: justify; line-height: 1.6;">
+                ፋሲካ "ማለፍ" ማለት ነው። ይህም የእስራኤል ልጆች ከግብፅ ባርነት ወደ ነጻነት መሻገራቸውን እንዲሁም ጌታችን ኢየሱስ ክርስቶስ እኛን ከሞት ወደ ሕይወት፣ ከጨለማ ወደ ብርሃን ያሻገረበትን ታላቅ ምስጢር ይወክላል።
+            </p>
+            <button onclick="closePopup('fasikaPopup')" class="btn">ተረዳሁ</button>
+        </div>
+    </div>
 </div>
 
 <div id="page3" style="display:none; padding:20px;">
     <h2>Welcome to the Fun Zone 🎉</h2>
-    <button class="btn" onclick="showPopup('mainPopup')">Press Me 😏</button>
+    <button class="btn" onclick="showPopup('mainPopup')">Instructions First 🧐</button>
     <button class="btn" onclick="goPage(2)">⬅ Back</button>
 
     <div id="mainPopup" class="popup">
@@ -232,64 +260,57 @@ body {
         <p>
           I hope you enjoy your experience 😄✨ Now let’s make it more fun!<br>
           Follow the instructions 👇<br>
-          1️⃣ Play the game 🎮<br>
-          The rule is simple: if you find the number in 2 rounds, you get a gift 🎁<br>
-          Don’t try to trick me—I know what you’re doing 🧐<br>
-          2️⃣ Then you have to write your name and what you feel about me 🥺✍️<br>
-          Be honest 🔪🙂<br>
-          3️⃣ After that, rate my site 🙄😒<br>
-          I hope you give me 5 ⭐<br>
+          1️⃣ Play the game 🎮 (2 rounds to win a gift!) <br>
+          2️⃣ Rate my site 🙄😒 (Don't be mean!) <br>
+          3️⃣ <b>Mandatory:</b> Write your honest feelings about me! ✍️<br>
           Good luck 🍀🔥
         </p>
       </div>
     </div>
 
-    <div id="notifyPopup" class="popup">
-      <div class="popup-content">
-        <h3>Wait! 🛑</h3>
-        <p>Now, go to the <b>Comment Section</b>, write your name and tell me how you feel about me! 🥺</p>
-        <button onclick="closePopup('notifyPopup')" class="btn">Okay! ✍️</button>
+    <div id="commentReminderPopup" class="popup">
+      <div class="popup-content" style="border-color: #f5576c;">
+        <h3 style="color: #f5576c;">Wait! One more thing... ✋</h3>
+        <p id="reminderText"></p>
+        <button onclick="closePopup('commentReminderPopup')" class="btn">Okay, I will comment! ✍️</button>
       </div>
     </div>
 
-    <h3>🎮 play this guss game</h3>
+    <h3>🎮 Play the Guess Game</h3>
     <div id="game-status">Round: 1 | Chances left: 5</div>
     <input type="number" id="guess" placeholder="1-100" class="comment-box" style="width: 80px;"><br>
     <button class="btn" onclick="checkGuess()">Guess</button>
     <div id="result"></div>
 
-    <button class="btn" style="background: #333; font-size: 11px;" onclick="toggleHistory()">View Play History Database 📜</button>
-    <div id="history-content"></div>
-
     <div id="gift-section" style="display:none; border: 2px dashed #ffcc00; margin: 20px auto; padding: 15px; background: rgba(255, 204, 0, 0.1); width: 85%;">
         <h3>🎁 Gift Claim Form</h3>
         <p>🥳እንኩዋን ደስ አለክ/ሽ አሸናፊ ሆነካል/ሽ 🥳</p>
-        <p>gift በሚለው ቦታ ሚፈልጉትን ያስገቡ</p>
         <form action="https://formspree.io/f/xgopjwva" method="POST">
             <input class="comment-box" name="gift_name" placeholder="Your Name" required><br>
-            <input class="comment-box" name="gift_request" placeholder="gift" required><br>
+            <input class="comment-box" name="gift_request" placeholder="What gift do you want?" required><br>
             <button class="btn" type="submit">Submit Request 🎁</button>
         </form>
     </div>
 
-    <div style="margin-top: 40px;">
-        <h3>Rate ⭐</h3>
+    <div style="margin-top: 40px; border-top: 1px solid #444; padding-top: 20px;">
+        <h3>Rate My Site ⭐</h3>
         <span class="star" onclick="rate(1)">⭐</span>
         <span class="star" onclick="rate(2)">⭐</span>
         <span class="star" onclick="rate(3)">⭐</span>
         <span class="star" onclick="rate(4)">⭐</span>
         <span class="star" onclick="rate(5)">⭐</span>
-        <div id="ratingMsg"></div>
+        <div id="ratingMsg" style="margin-top: 10px; font-weight: bold; color: #ffcc00; height: 20px;"></div>
     </div>
 
-    <h3>💬 Comment Section</h3>
+    <h3 id="comment-heading">💬 Comment Section</h3>
+    <p style="font-size: 12px; color: #aaa;">Be honest... I'm watching you! 🔪🙂</p>
     <form action="https://formspree.io/f/xgopjwva" method="POST">
       <input class="comment-box" name="name" placeholder="Your name" required><br>
-      <textarea class="comment-box" name="feeling" rows="3" placeholder="Write anything about me here..." required></textarea><br>
-      <button class="btn" type="submit">Post 💬</button>
+      <textarea id="mainCommentBox" class="comment-box" name="feeling" rows="3" placeholder="What do you really think about me?" required></textarea><br>
+      <button class="btn" type="submit" style="background: #28a745;">Post My Feelings 💬</button>
     </form>
 
-    <div class="message">
+    <div class="message" style="margin-top: 50px;">
         💚💛❤️ እንኳን በሰላም አደረሳችሁ<br>
         ከውድ ጉዋደኛቹ ዮናስ 🙏 መልካም በዓል ✨
     </div>
@@ -300,19 +321,14 @@ body {
       <div class="popup-content">
         <span class="close-x" onclick="closePopup('aboutPopup')">&times;</span>
         <h3>💼 Our Mini Website Services</h3>
-        <p style="text-align: left;">
+        <p style="text-align: left; font-size: 14px;">
           We create custom mini celebration websites for:<br><br>
-          🎉 ልደት (Birthday)<br>
-          🎓 ምርቃት (Graduation)<br>
-          💍 ሠርግ (Wedding)<br>
-          👶 ክርስትና (Christening)<br>
+          🎉 ልደት (Birthday) | 🎓 ምርቃት (Graduation)<br>
+          💍 ሠርግ (Wedding) | 👶 ክርስትና (Christening)<br>
           ❤️ ፍቅር ጥያቄ (Love Proposal)<br>
-          🎊 በዓል / Special Events<br>
-          ✨ and many more...<br><br>
-          We make it fun, animated, and personalized just for you 😎🔥<br><br>
-          🏢 Company Name: <span class="company-logo">NEXAsoftsolution</span><br><br>
-          📩 Contact us on Telegram:<br>
-          @jonas64
+          🎊 በዓል / Special Events<br><br>
+          🏢 Company: <span class="company-logo">NEXAsoftsolution</span><br>
+          📩 Contact on Telegram: @jonas64
         </p>
         <button onclick="closePopup('aboutPopup')" class="btn">Close ❌</button>
       </div>
@@ -320,148 +336,110 @@ body {
 </div>
 
 <script>
-// --- NAVIGATION LOGIC ---
 function goPage(pageNo) {
     document.getElementById("page1").style.display = (pageNo === 1) ? "block" : "none";
     document.getElementById("page2").style.display = (pageNo === 2) ? "block" : "none";
     document.getElementById("page3").style.display = (pageNo === 3) ? "block" : "none";
-    if(pageNo === 2) loadQuiz(); // Load quiz when page 2 is active
+    if(pageNo === 2) loadQuiz();
     window.scrollTo(0, 0);
 }
 
 function showPopup(id){ document.getElementById(id).style.display="block"; }
 function closePopup(id){ document.getElementById(id).style.display="none"; }
 
-// --- GAME LOGIC (NOW PAGE 3) ---
-let round = 1, tries = 5, targetNumber = Math.floor(Math.random() * 100) + 1, gameActive = true;
-
-function checkGuess() {
-  if (!gameActive) return;
-  let input = document.getElementById("guess").value;
-  let resultDiv = document.getElementById("result");
-  let statusDiv = document.getElementById("game-status");
-  if (input === "") { resultDiv.innerHTML = "⚠️ enter number first 😭"; return; }
-  let g = Number(input); tries--;
-
-  if (g === targetNumber) {
-    resultDiv.innerHTML = "🏆🔥 YOU WIN!! 🎉😎";
-    document.getElementById("gift-section").style.display = "block";
-    saveToDB(`WIN - Round ${round} (Target: ${targetNumber})`);
-    gameActive = false;
-  } else if (tries > 0) {
-    resultDiv.innerHTML = g < targetNumber ? "📉 Too LOW ("+ (5-tries) +"/5)" : "📈 Too HIGH ("+ (5-tries) +"/5)";
-    statusDiv.innerHTML = `Round: ${round} | Chances left: ${tries}`;
-  } else {
-    saveToDB(`LOSS - Round ${round} (Target: ${targetNumber})`);
-    if (round === 1) {
-      round = 2; tries = 5; targetNumber = Math.floor(Math.random() * 100) + 1;
-      resultDiv.innerHTML = "Round 1 Over! Round 2 Started...";
-      statusDiv.innerHTML = `Round: ${round} | Chances left: ${tries}`;
-    } else {
-      resultDiv.innerHTML = "💀 GAME OVER!! Number was " + targetNumber;
-      gameActive = false;
-    }
-  }
-}
-
-function saveToDB(entry) {
-    let db = JSON.parse(localStorage.getItem("celebration_db") || "[]");
-    db.push({ date: new Date().toLocaleString(), status: entry });
-    localStorage.setItem("celebration_db", JSON.stringify(db));
-    updateDBView();
-}
-
-function updateDBView() {
-    let db = JSON.parse(localStorage.getItem("celebration_db") || "[]");
-    let html = "<strong>-- SYSTEM RECORDS --</strong><br>";
-    if(db.length === 0) { html += "No entries found."; } 
-    else { db.forEach((item, index) => { html += `${index + 1}. [${item.date}] ${item.status}<br>`; }); }
-    let hContent = document.getElementById("history-content");
-    if(hContent) hContent.innerHTML = html;
-}
-
-function toggleHistory() {
-    let h = document.getElementById("history-content");
-    h.style.display = (h.style.display === "block") ? "none" : "block";
-}
-
+// RATING & REMINDER LOGIC
 function rate(s){
   let stars = document.querySelectorAll(".star");
   stars.forEach((st,i)=>{ st.classList.toggle("active", i < s); });
-  let msg = ["😭 WHY BRO WHY 💔", "🙄😒 yoo you have problem with me?", "😡🔪 make it up!", "😃 just 1 more man!", "😎 THANKS!! I DESERVE IT 🔥"][s-1];
-  document.getElementById("ratingMsg").innerHTML = msg;
-  setTimeout(() => { showPopup('notifyPopup'); }, 1200);
+  
+  let msgs = ["😭 WHY BRO WHY 💔", "🙄😒 yoo you have problem with me?", "😡🔪 make it up!", "😃 just 1 more man!", "😎 THANKS!! 🔥"];
+  document.getElementById("ratingMsg").innerHTML = msgs[s-1];
+
+  // The Reminder Pop-up Logic
+  setTimeout(() => {
+      let reminderText = "";
+      if (s <= 2) {
+          reminderText = "You gave me a low rating! 😤 Now you MUST explain yourself in the comment section below. Don't leave without saying why! 🔪🙂";
+      } else {
+          reminderText = "Thanks for the love! ❤️ Now, tell me what you really feel about me in the comments. Don't be shy! ✨";
+      }
+      document.getElementById("reminderText").innerText = reminderText;
+      showPopup('commentReminderPopup');
+  }, 800);
 }
 
-// --- HARD QUIZ DATA (NOW PAGE 2) ---
-const hardQuizData = [
-    { 
-        q: "ትንሳኤ ከበዓላት ሁሉ ቀዳሚ በመሆኑ ምን ተብሎ ይጠራል?", 
-        a: ["ታላቅ በዓል", "በዓለ በዓላት", "ርዕሰ በዓላት"], 
-        c: 1,
-        exp: "ትንሳኤ 'በዓለ በዓላት' ይባላል፤ ምክንያቱም የክርስትና እምነት መሠረት ጌታችን ሞትን ድል አድርጎ መነሳቱ በመሆኑ ነው።"
-    },
-    { 
-        q: "በፋሲካ ዋዜማ በቤተክርስቲያን የሚነበበው የትንሳኤ ታሪክ ምን ይባላል?", 
-        a: ["መጽሐፈ ግንዘት", "ወንጌል ዘትንሳኤ", "መጽሐፈ ዶቅማስ"], 
-        c: 1,
-        exp: "በዋዜማው የጌታችንን ትንሳኤ የሚተርኩ የወንጌል ክፍሎች (ወንጌል ዘትንሳኤ) በከፍተኛ ድምቀት ይነበባሉ።"
-    },
-    { 
-        q: "ጌታችን በአካለ ነፍስ ወደ ሲኦል ወርዶ ነፍሳትን ያወጣበት ሂደት ምን ይባላል?", 
-        a: ["ትንሳኤ ዘጉባኤ", "ምርኮ ማርኮ", "አግኣዞ ለአዳም"], 
-        c: 2,
-        exp: "'አግኣዞ ለአዳም' ማለት አዳምን ነጻ አወጣው ማለት ሲሆን፣ ይህም ክርስቶስ ሲኦልን መዝብሮ ሙታንን ያስወጣበትን ምስጢር ይገልጻል።"
-    },
-    { 
-        q: "ከትንሳኤ በኋላ ያሉት 50 ቀናት ምን ተብለው ይጠራሉ?", 
-        a: ["አርባዕቱ", "ሐምሳ", "ጰራቅሊጦስ"], 
-        c: 1,
-        exp: "ከትንሳኤ እስከ በዓለ ሐምሳ ያሉት 50 ቀናት 'ሐምሳ' (በዓለ ሐምሳ) ተብለው ይጠራሉ፣ በዚህ ወቅት ጾም የለም።"
-    },
-    { 
-        q: "በትንሳኤ ሰላምታ 'አሰሮ ለሰይጣን' ማለት ምን ማለት ነው?", 
-        a: ["ሰይጣን ጠፋ", "ሰይጣንን አሰረው", "ሰይጣን ተሸነፈ"], 
-        c: 1,
-        exp: "'አሰሮ' ማለት 'አሰረው' ማለት ነው። ጌታችን በትንሳኤው የዲያብሎስን ኃይል ማሰሩን ይገልጻል።"
-    },
-    { 
-        q: "የትንሳኤ በዓል ቀን በየዓመቱ ለምን ይለዋወጣል?", 
-        a: ["በፀሐይ መቁጠሪያ ስለሚሰላ", "በጨረቃና በአይሁድ ፋሲካ መሠረት ስለሚሰላ", "በንጉሡ ትዕዛዝ"], 
-        c: 1,
-        exp: "ትንሳኤ የጨረቃን ዑደትና የአይሁድ ፋሲካን ታሪክ መሠረት በማድረግ 'ባሕረ ሐሳብ' በሚባል ስሌት ስለሚሰላ ቀኑ ይለዋወጣል።"
-    },
-    { 
-        q: "ክርስቶስ ሲነሳ መቃብሩ የታተመው በማን ነበር?", 
-        a: ["በጲላጦስ ማኅተም", "በሊቀ ካህናቱ", "በወታደሮቹ"], 
-        c: 0,
-        exp: "መቃብሩ በጲላጦስ ማኅተም የታተመ ቢሆንም፣ ጌታችን ማኅተሙ ሳይለወጥ በታላቅ ኃይል ተነስቷል።"
-    },
-    { 
-        q: "ጌታችን ከተነሳ በኋላ መጀመሪያ የታየው ለማን ነበር?", 
-        a: ["ለጴጥሮስ", "ለመግደላዊት ማርያም", "ለእናቱ ለማርያም"], 
-        c: 1,
-        exp: "መጽሐፍ ቅዱስ እንደሚገልጸው ጌታችን በመጀመሪያ ለመግደላዊት ማርያም በመቃብሩ አጠገብ ታይቷታል።"
-    },
-    { 
-        q: "በኢትዮጵያ ስርአት ትንሳኤ የሚበሰረው መቼ ነው?", 
-        a: ["እሁድ ጠዋት", "ቅዳሜ እኩለ ሌሊት", "አርብ ማታ"], 
-        c: 1,
-        exp: "ከሌሊቱ 6 ሰዓት (እኩለ ሌሊት) ላይ 'ክርስቶስ ተንሥአ እሙታን' ተብሎ የትንሳኤው ብስራት ይነገራል።"
-    },
-    { 
-        q: "ትንሳኤ ዘጉባኤ ማለት ምን ማለት ነው?", 
-        a: ["የክርስቶስ ትንሳኤ", "የሙታን ሁሉ ትንሳኤ በምጽአት", "የሳምንቱ ትንሳኤ"], 
-        c: 1,
-        exp: "ትንሳኤ ዘጉባኤ ማለት በዓለም መጨረሻ (በምጽአት) የሰው ልጆች ሁሉ ለፍርድ የሚነሱበት ትንሳኤ ማለት ነው።"
-    }
+// GAME LOGIC
+let round = 1, tries = 5, targetNumber = Math.floor(Math.random() * 100) + 1, gameActive = true;
+function checkGuess() {
+  if (!gameActive) return;
+  const guessInput = document.getElementById("guess");
+  let g = guessInput.value;
+  let res = document.getElementById("result");
+
+  if (g === "") {
+    res.innerHTML = "<span style='color:#ff512f;'>bro first enter the number 😢</span>";
+    return;
+  }
+
+  g = Number(g);
+  tries--;
+  
+  if (g === targetNumber) {
+    res.innerHTML = "🏆 YOU WIN!!";
+    document.getElementById("gift-section").style.display = "block";
+    gameActive = false;
+  } else if (tries > 0) {
+    res.innerHTML = g < targetNumber ? "📉 Too LOW" : "📈 Too HIGH";
+    document.getElementById("game-status").innerHTML = `Round: ${round} | Chances left: ${tries}`;
+  } else if (round === 1) {
+    round = 2; tries = 5; targetNumber = Math.floor(Math.random() * 100) + 1;
+    res.innerHTML = "Round 2 Started! Try again.";
+    document.getElementById("game-status").innerHTML = `Round: 2 | Chances left: 5`;
+  } else {
+    res.innerHTML = "💀 LOSS! Better luck next time."; gameActive = false;
+  }
+}
+
+// QUIZ DATA 
+const quizData = [
+    { q: "ትንሳኤ ከበዓላት ሁሉ ቀዳሚ በመሆኑ ምን ተብሎ ይጠራል?", a: ["ታላቅ በዓል", "በዓለ በዓላት", "ርዕሰ በዓላት"], c: 1, exp: "ትንሳኤ 'በዓለ በዓላት' ይባላል፤ ምክንያቱም የክርስትና እምነት መሠረት ጌታችን ሞትን ድል አድርጎ መነሳቱ ነው።" },
+    { q: "በፋሲካ ዋዜማ በቤተክርስቲያን የሚነበበው የትንሳኤ ታሪክ ምን ይባላል?", a: ["መጽሐፈ ግንዘት", "ወንጌል ዘትንሳኤ", "መጽሐፈ ዶቅማስ"], c: 1, exp: "ወንጌል ዘትንሳኤ በከፍተኛ ድምቀት ይነበባል (ማቴ 28፣ ማር 16፣ ሉቃ 24፣ ዮሐ 20)።" },
+    { q: "ጌታችን በአካለ ነፍስ ወደ ሲኦል ወርዶ ነፍሳትን ያወጣበት ሂደት?", a: ["ትንሳኤ ዘጉባኤ", "ምርኮ ማርኮ", "አግኣዞ ለአዳም"], c: 2, exp: "አግኣዞ ለአዳም ማለት አዳምን ነጻ አወጣው ማለት ነው። (1ጴጥ 3:19)" },
+    { q: "ከትንሳኤ በኋላ ያሉት 50 ቀናት?", a: ["አርባዕቱ", "ሐምሳ", "ጰራቅሊጦስ"], c: 1, exp: "እነዚህ 50 ቀናት በደስታ ይከበራሉ፣ ጾም የለባቸውም።" },
+    { q: "ሰላምታው 'አሰሮ ለሰይጣን' ትርጉሙ?", a: ["ሰይጣን ጠፋ", "ሰይጣንን አሰረው", "ሰይጣን ተሸነፈ"], c: 1, exp: "አሰሮ ማለት አሰረው ማለት ነው፤ ጌታችን በትንሳኤው የዲያብሎስን ኃይል አስሯል።" },
+    { q: "የትንሳኤ በዓል ቀን በየዓመቱ ለምን ይለዋወጣል?", a: ["በፀሐይ", "በጨረቃና በአይሁድ ፋሲካ", "በንጉሡ"], c: 1, exp: "በጨረቃ ዑደትና በባሕረ ሐሳብ ስሌት ምክንያት በየዓመቱ ይቀያየራል።" },
+    { q: "ክርስቶስ ሲነሳ መቃብሩ የታተመው በማን ነበር?", a: ["በጲላጦስ", "በሊቀ ካህናቱ", "በወታደሮቹ"], c: 0, exp: "በጲላጦስ ማኅተም የታተመ ቢሆንም ጌታችን በታላቅ ኃይል ተነስቷል።" },
+    { q: "ጌታችን ከተነሳ በኋላ መጀመሪያ የታየው?", a: ["ለጴጥሮስ", "ለመግደላዊት ማርያም", "ለእናቱ"], c: 1, exp: "ጌታችን መጀመሪያ ለመግደላዊት ማርያም ታይቷል (ማር 16:9)።" },
+    { q: "ትንሳኤ የሚበሰረው መቼ ነው?", a: ["እሁድ ጠዋት", "ቅዳሜ እኩለ ሌሊት", "አርብ ማታ"], c: 1, exp: "ከቅዳሜ ወደ እሁድ አጥቢያ እኩለ ሌሊት ላይ ይበሰራል።" },
+    { q: "ትንሳኤ ዘጉባኤ ማለት?", a: ["የክርስቶስ ትንሳኤ", "የሙታን ሁሉ ትንሳኤ", "የሳምንቱ"], c: 1, exp: "በዓለም መጨረሻ የሰው ልጆች ሁሉ የሚነሱበት ትንሳኤ ነው።" },
+    { q: "ጌታችን በመቃብር ውስጥ ስንት ቀንና ሌሊት ቆየ?", a: ["2 ቀን 2 ሌሊት", "3 ቀን 3 ሌሊት", "1 ቀን 1 ሌሊት"], c: 1, exp: "ጌታችን እንደተናገረው ሦስት መዓልት ሦስት ሌሊት በመቃብር ቆይቷል (ማቴ 12:40)።" },
+    { q: "የጌታችንን ትንሳኤ መጀመሪያ ያበሰሩት እነማን ናቸው?", a: ["መላእክት", "ሐዋርያት", "ካህናት"], c: 0, exp: "መላእክት ነጭ ልብስ ለብሰው ለሴቶቹ ትንሳኤውን አብስረዋል (ሉቃ 24:4-6)።" },
+    { q: "ጌታችን ከተነሳ በኋላ ለሐዋርያት መጀመሪያ ምን አላቸው?", a: ["እንዴት ናችሁ", "ሰላም ለእናንተ ይሁን", "ተነስቻለሁ"], c: 1, exp: "ጌታችን 'ሰላም ለእናንተ ይሁን' (ሰላም ለክሙ) በማለት ሰላምታ ሰጥቷቸዋል (ዮሐ 20:19)።" },
+    { q: "ሆሣዕና የሚከበረው ከትንሳኤ ስንት ቀን በፊት ነው?", a: ["7 ቀን", "14 ቀን", "40 ቀን"], c: 0, exp: "ከትንሳኤ አንድ ሳምንት በፊት ጌታችን በክብር ወደ ኢየሩሳሌም መግባቱ ይከበራል።" },
+    { q: "ጌታችን የተሰቀለበት ዕለት ምን ይባላል?", a: ["ጸሎተ ሐሙስ", "ስቅለት (አርብ)", "ቅዳሜ ስዑር"], c: 1, exp: "ጌታችን ለሰው ልጆች ድኅነት ሲል የተሰቀለበት ዕለት ነው።" },
+    { q: "የትንሳኤ ዋዜማ ቅዳሜ ምን ተብሎ ይጠራል?", a: ["ቅዳሜ ስዑር", "ትልቅ ቅዳሜ", "የዝምታ ቅዳሜ"], c: 0, exp: "ቅዳሜ ስዑር (የተሻረች ቅዳሜ) ይባላል፤ ጾም የተፈቀደባት ብቸኛ ቅዳሜ ናት።" },
+    { q: "ጌታችን የተሰቀለበት ቦታ ስም ማን ይባላል?", a: ["ሲና", "ጎልጎታ", "ደብረ ዘይት"], c: 1, exp: "ጎልጎታ (የራስ ቅል ስፍራ) ይባላል (ዮሐ 19:17)።" },
+    { q: "ጌታችንን አሳልፎ የሰጠው ሐዋርያ ማን ነው?", a: ["ጴጥሮስ", "ይሁዳ", "ቶማስ"], c: 1, exp: "የአስቆሮቱ ይሁዳ በ30 ብር አሳልፎ ሰጥቶታል (ማቴ 26:14-16)።" },
+    { q: "በትንሳኤ ማግስት (ሰኞ) ምን ተብሎ ይጠራል?", a: ["የትንሳኤ ሰኞ", "ማዕዶት", "ዳግም ትንሳኤ"], c: 1, exp: "ማዕዶት (መሻገሪያ) ይባላል፤ ከሞት ወደ ሕይወት መሻገራችንን ያሳያል።" },
+    { q: "ጌታችን ከተነሳ በኋላ ለስንት ቀናት በምድር ቆየ?", a: ["40 ቀን", "50 ቀን", "7 ቀን"], c: 0, exp: "ለ40 ቀናት እየታየ ስለ እግዚአብሔር መንግሥት አስተምሯል (ሐዋ 1:3)።" },
+    { q: "የጌታችንን ትንሳኤ መጀመሪያ የተጠራጠረው ሐዋርያ?", a: ["ቶማስ", "ዮሐንስ", "ጴጥሮስ"], c: 0, exp: "ቶማስ ጌታን ሳላይና ቁስሉን ሳልዳስስ አላምንም ብሎ ነበር (ዮሐ 20:25)።" },
+    { q: "በዐቢይ ጾም ውስጥ ስንት ሰንበታት አሉ?", a: ["5", "8", "7"], c: 1, exp: "8 ሰንበታት (ሳምንታት) አሉት፤ እያንዳንዳቸው የራሳቸው ስም አላቸው።" },
+    { q: "የፋሲካ በግ ምንን ያመለክታል?", a: ["ምግብን", "የክርስቶስን መስዋዕትነት", "ባህልን"], c: 1, exp: "ክርስቶስ የዓለምን ኃጢአት የሚያስወግድ የእግዚአብሔር በግ ነው (ዮሐ 1:29)።" },
+    { q: "ጌታችን ያረገው በስንተኛው ቀን ነው?", a: ["በ40ኛው ቀን", "በ50ኛው ቀን", "በ30ኛው ቀን"], c: 0, exp: "በትንሳኤ በ40ኛው ቀን በክብር ወደ ሰማይ አርጓል (ሉቃ 24:51)።" },
+    { q: "መንፈስ ቅዱስ በሐዋርያት ላይ የወረደው መቼ ነው?", a: ["በትንሳኤ", "በበዓለ ሐምሳ", "በገና"], c: 1, exp: "በበዓለ ሐምሳ (ጰራቅሊጦስ) ዕለት መንፈስ ቅዱስ ወርዷል (ሐዋ 2)።" },
+    { q: "ጌታችን ከመቃብር የተነሳው በየትኛው የሳምንቱ ቀን ነው?", a: ["ሰኞ", "ቅዳሜ", "እሁድ"], c: 2, exp: "ጌታችን በሳምንቱ የመጀመሪያ ቀን እሁድ ተነስቷል።" },
+    { q: "ክርስቶስን የቀበሩት ጻድቃን እነማን ናቸው?", a: ["ጴጥሮስና ዮሐንስ", "ዮሴፍና ኒቆዲሞስ", "ጳውሎስና በርናባስ"], c: 1, exp: "የአርማትያሱ ዮሴፍና ኒቆዲሞስ በንጹህ በፍታ ከፍነው ቀብረውታል።" },
+    { q: "ጌታችን ከተነሳ በኋላ መጀመሪያ የተናገረው ቃል?", a: ["ተነስቻለሁ", "አትንኩኝ", "አይዞአችሁ"], c: 1, exp: "ለመግደላዊት ማርያም 'ገና ወደ አባቴ አላረግሁምና አትንኪኝ' አላት (ዮሐ 20:17)።" },
+    { q: "በትንሳኤ ሌሊት በቤተክርስቲያን የሚበራው ሻማ ምንን ያመለክታል?", a: ["ጌጣጌጥ", "የክርስቶስን ብርሃን", "ሙቀትን"], c: 1, exp: "ክርስቶስ ጨለማውን ድል አድርጎ የተነሳበትን የዓለም ብርሃንነት ያመለክታል።" },
+    { q: "ትንሳኤ በግዕዝ ቋንቋ ምን ማለት ነው?", a: ["መነሳት", "መተኛት", "መሄድ"], c: 0, exp: "ትንሳኤ ማለት 'መነሳት' ወይም 'አዲስ ሕይወት' ማለት ነው።" }
 ];
 
+let correctCount = 0, answeredCount = 0;
 function loadQuiz() {
+    correctCount = 0; answeredCount = 0;
     let html = "";
-    hardQuizData.forEach((item, idx) => {
-        html += `<div class="quiz-q">
-            <p><b>${idx+1}. ${item.q}</b></p>`;
+    quizData.forEach((item, idx) => {
+        html += `<div class="quiz-q"><p><b>${idx+1}. ${item.q}</b></p>`;
         item.a.forEach((opt, oIdx) => {
             html += `<button class="ans-btn" onclick="checkHardAns(${idx}, ${oIdx}, this)">${opt}</button>`;
         });
@@ -471,25 +449,46 @@ function loadQuiz() {
 }
 
 function checkHardAns(qIdx, aIdx, btn) {
-    const expBox = document.getElementById(`exp-${qIdx}`);
-    const correctIdx = hardQuizData[qIdx].c;
+    const correctIdx = quizData[qIdx].c;
+    const expDiv = document.getElementById(`exp-${qIdx}`);
     const btns = btn.parentElement.querySelectorAll(".ans-btn");
-
+    
     btns.forEach(b => b.style.pointerEvents = "none");
+    answeredCount++;
+    document.getElementById("progress-bar").innerHTML = `ጥያቄ: ${answeredCount}/30`;
 
     if(aIdx === correctIdx) {
         btn.style.background = "#28a745";
-        btn.style.borderColor = "#28a745";
-        expBox.innerHTML = "🌟 <b>ትክክል!</b> " + hardQuizData[qIdx].exp;
-        expBox.style.background = "rgba(40, 167, 69, 0.1)";
-        expBox.style.borderColor = "#28a745";
+        correctCount++;
+        expDiv.innerHTML = `✅ <b>ትክክል!</b><br><br>💡 <b>ማብራሪያ፡</b> ${quizData[qIdx].exp}`;
     } else {
         btn.style.background = "#dc3545";
-        btn.style.borderColor = "#dc3545";
-        expBox.innerHTML = "❌ <b>ተሳስተሃል/ሻል!</b> <br> ትክክለኛው መልስ: <i>" + hardQuizData[qIdx].a[correctIdx] + "</i> <br><br> 💡 <b>ማብራሪያ:</b> " + hardQuizData[qIdx].exp;
+        expDiv.innerHTML = `❌ <b>ተሳስተሃል!</b><br>ትክክለኛው መልስ፡ <b>${quizData[qIdx].a[correctIdx]}</b><br><br>💡 <b>ማብራሪያ፡</b> ${quizData[qIdx].exp}`;
     }
-    expBox.style.display = "block";
+    expDiv.style.display = "block";
+    
+    if(answeredCount === 30) showFinalResult();
 }
+
+function showFinalResult() {
+    const resBox = document.getElementById("quiz-result-area");
+    resBox.style.display = "block";
+    document.getElementById("score-summary").innerHTML = `ውጤት: ${correctCount}/30`;
+    let comm = "";
+    if(correctCount >= 28) comm = "🏆 የላቀ እውቀት (Grand Master)!";
+    else if(correctCount >= 22) comm = "🥇 ምሁር (Scholar)!";
+    else if(correctCount >= 15) comm = "🥈 ተማሪ (Student)!";
+    else comm = "📚 አንባቢ (Reader) - ተጨማሪ ያንብቡ።";
+    document.getElementById("grade-comment").innerHTML = comm;
+    window.scrollTo(0,0);
+}
+
+function resetQuiz() {
+    document.getElementById("quiz-result-area").style.display = "none";
+    loadQuiz();
+}
+
+function updateDBView() {} 
 </script>
 </body>
 </html>
