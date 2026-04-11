@@ -44,14 +44,8 @@ body {
 }
 
 @keyframes glow {
-  from {
-    text-shadow: 0 0 5px #fff, 0 0 10px #0ff, 0 0 15px #0ff;
-    transform: scale(1);
-  }
-  to {
-    text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
-    transform: scale(1.1);
-  }
+  from { text-shadow: 0 0 5px #fff, 0 0 10px #0ff, 0 0 15px #0ff; transform: scale(1); }
+  to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff; transform: scale(1.1); }
 }
 
 .message {
@@ -74,6 +68,14 @@ body {
   background: linear-gradient(90deg, #ff512f, #dd2476);
   color: white;
   cursor: pointer;
+  font-weight: bold;
+}
+
+.about-btn {
+  font-size: 18px;
+  padding: 15px 35px;
+  background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
 }
 
 .popup {
@@ -81,7 +83,8 @@ body {
   position:fixed;
   top:0;left:0;
   width:100%;height:100%;
-  background:rgba(0,0,0,0.8);
+  background:rgba(0,0,0,0.85);
+  z-index: 1000;
 }
 
 .popup-content {
@@ -91,6 +94,17 @@ body {
   background:#111;
   padding:20px;
   border-radius:15px;
+  border: 1px solid #444;
+  position: relative;
+}
+
+.close-x {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ff512f;
 }
 
 .star {
@@ -105,217 +119,225 @@ body {
 
 .comment-box {
   margin-top: 10px;
-  padding: 10px;
-  width: 80%;
+  padding: 12px;
+  width: 85%;
   border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  color: white;
 }
 
 .company-logo {
   font-weight: bold;
-  font-size: 22px;
+  font-size: 24px;
   background: linear-gradient(90deg, #00ffcc, #00ccff, #ff00ff, #ffff00, #00ffcc);
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shinyMove 2.5s linear infinite, glowPulse 1.5s ease-in-out infinite;
-  text-shadow: 0 0 10px rgba(0,255,255,0.8);
+  animation: shinyMove 2.5s linear infinite;
 }
 
 @keyframes shinyMove {
   0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
-@keyframes glowPulse {
-  0% { filter: drop-shadow(0 0 5px #00ffff); }
-  50% { filter: drop-shadow(0 0 20px #ff00ff); }
-  100% { filter: drop-shadow(0 0 5px #00ffff); }
+#history-content {
+    display: none;
+    text-align: left;
+    background: rgba(0,0,0,0.8);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px auto;
+    width: 85%;
+    font-size: 13px;
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
+    max-height: 200px;
+    overflow-y: auto;
 }
 </style>
 </head>
 
-<body>
+<body onload="updateDBView()">
 
-<!-- PAGE 1 -->
 <div id="page1">
-
-<div class="title">
-መልካም የ ትንሳኤ በአል
+    <div class="title">መልካም የ ትንሳኤ በአል</div>
+    <div class="message">
+        <span class="emoji">✨</span>ክርስቶስ ተንስአ እሙታን<br>
+        <span class="emoji">✨</span>በዐቢይ ኃይል ወስልጣን<br>
+        <span class="emoji">✨</span>አሰሮ ለሰይጣን<br>
+        <span class="emoji">✨</span>አግኣዞ ለአዳም<br>
+        <span class="emoji">🕊</span>ሰላም<span class="emoji">🌿</span><br>
+        እምይዕዜሰ ኮነ <span class="emoji">🕊</span> ፍስሃ ወሰላም <span class="emoji">🕊</span><br><br>
+        💚💛❤️ እንኳን ለጌታችን ለመድሀኒታችን ለእየሱስ ክርስቶስ ✝️ትንሣኤ በሰላም አደረሰን አደረሳችሁ 🙏🙏🙏
+    </div>
+    <div class="footer">from your friend Yonas 💙</div>
+    <button class="btn" onclick="goNext()">Enter to next page 🎉</button>
 </div>
 
-<div class="message">
-<span class="emoji">✨</span>ክርስቶስ ተንስአ እሙታን<br>
-<span class="emoji">✨</span>በዐቢይ ኃይል ወስልጣን<br>
-<span class="emoji">✨</span>አሰሮ ለሰይጣን<br>
-<span class="emoji">✨</span>አግኣዞ ለአዳም<br>
-<span class="emoji">🕊</span>ሰላም<span class="emoji">🌿</span><br>
-እምይዕዜሰ<br>
-ኮነ<br>
-<span class="emoji">🕊</span> ፍስሃ ወሰላም <span class="emoji">🕊</span><br><br>
-
-💚💛❤️ እንኳን ለጌታችን ለመድሀኒታችን ለእየሱስ ክርስቶስ ✝️ትንሣኤ
-በሰላም አደረሰን አደረሳችሁ 🙏🙏🙏
-</div>
-
-<div class="footer">
-from your friend Yonas 💙
-</div>
-
-<button class="btn" onclick="goNext()">Enter to next page 🎉</button>
-
-</div>
-
-<!-- PAGE 2 -->
 <div id="page2" style="display:none; padding:20px;">
+    <h2>Welcome 🎉</h2>
+    <button class="btn" onclick="showPopup('mainPopup')">Press Me 😏</button>
+    <button class="btn" onclick="goBack()">⬅ Back</button>
 
-<h2>Welcome 🎉</h2>
+    <div id="mainPopup" class="popup">
+      <div class="popup-content">
+        <span class="close-x" onclick="closePopup('mainPopup')">&times;</span>
+        <p>
+          I hope you enjoy your experience 😄✨ Now let’s make it more fun!<br>
+          Follow the instructions 👇<br>
+          1️⃣ Play the game 🎮<br>
+          The rule is simple: if you find the number in 2 rounds, you get a gift 🎁<br>
+          Don’t try to trick me—I know what you’re doing 🧐<br>
+          2️⃣ Then you have to write your name and what you feel about me 🥺✍️<br>
+          Be honest 🔪🙂<br>
+          3️⃣ After that, rate my site 🙄😒<br>
+          I hope you give me 5 ⭐<br>
+          Good luck 🍀🔥
+        </p>
+      </div>
+    </div>
 
-<button class="btn" onclick="showPopup()">Press Me 😏</button>
-<button class="btn" onclick="goBack()">⬅ Back</button>
+    <div id="notifyPopup" class="popup">
+      <div class="popup-content">
+        <h3>Wait! 🛑</h3>
+        <p>Now, go to the <b>Comment Section</b>, write your name and tell me how you feel about me! 🥺</p>
+        <button onclick="closePopup('notifyPopup')" class="btn">Okay! ✍️</button>
+      </div>
+    </div>
 
-<div id="popup" class="popup">
-  <div class="popup-content">
+    <h3>🎮 play this guss game</h3>
+    <div id="game-status">Round: 1 | Chances left: 5</div>
+    <input type="number" id="guess" placeholder="1-100" class="comment-box" style="width: 80px;"><br>
+    <button class="btn" onclick="checkGuess()">Guess</button>
+    <div id="result"></div>
 
-    <button onclick="closePopup()" class="btn">EXIT ❌</button>
- <p>
-I hope you enjoy your experience 😄✨ Now let’s make it more fun!<br>
-Follow the instructions 👇<br>
-1️⃣ Play the game 🎮<br>
-The rule is simple: if you find the number in 2 rounds, you get a gift 🎁<br>
-Don’t try to trick me—I know what you’re doing 🧐<br>
-2️⃣ Then you have to write your name and what you feel about me 🥺✍️<br>
-Be honest 🔪🙂<br>
-3️⃣ After that, rate my site 🙄😒<br>
-I hope you give me 5 ⭐<br>
-Good luck 🍀🔥
-    </p>
+    <button class="btn" style="background: #333; font-size: 11px;" onclick="toggleHistory()">View Play History Database 📜</button>
+    <div id="history-content"></div>
 
-  </div>
-</div>
+    <div id="gift-section" style="display:none; border: 2px dashed #ffcc00; margin: 20px auto; padding: 15px; background: rgba(255, 204, 0, 0.1); width: 85%;">
+        <h3>🎁 Gift Claim Form</h3>
+        <p>🥳እንኩዋን ደስ አለክ/ሽ አሸናፊ ሆነካል/ሽ 🥳</p>
+        <p>gift በሚለው ቦታ ሚፈልጉትን ያስገቡ</p>
+        <form action="https://formspree.io/f/xgopjwva" method="POST">
+            <input class="comment-box" name="gift_name" placeholder="Your Name" required><br>
+            <input class="comment-box" name="gift_request" placeholder="gift" required><br>
+            <button class="btn" type="submit">Submit Request 🎁</button>
+        </form>
+    </div>
 
-<h3>🎮 GAME</h3>
+    <div style="margin-top: 40px;">
+        <h3>Rate ⭐</h3>
+        <span class="star" onclick="rate(1)">⭐</span>
+        <span class="star" onclick="rate(2)">⭐</span>
+        <span class="star" onclick="rate(3)">⭐</span>
+        <span class="star" onclick="rate(4)">⭐</span>
+        <span class="star" onclick="rate(5)">⭐</span>
+        <div id="ratingMsg"></div>
+    </div>
 
-<input type="number" id="guess"><br>
-<button class="btn" onclick="checkGuess()">Guess</button>
+    <h3>💬 Comment Section</h3>
+    <form action="https://formspree.io/f/xgopjwva" method="POST">
+      <input class="comment-box" name="name" placeholder="Your name" required><br>
+      <textarea class="comment-box" name="feeling" rows="3" placeholder="Write anything about me here..." required></textarea><br>
+      <button class="btn" type="submit">Post 💬</button>
+    </form>
 
-<div id="result"></div>
+    <div class="message">
+        💚💛❤️ እንኳን በሰላም አደረሳችሁ<br>
+        ከውድ ጉዋደኛቹ ዮናስ 🙏 መልካም በዓል ✨
+    </div>
 
-<h3>Rate ⭐</h3>
+    <button class="btn about-btn" onclick="showPopup('aboutPopup')"><b>ABOUT US</b></button>
 
-<span class="star" onclick="rate(1)">⭐</span>
-<span class="star" onclick="rate(2)">⭐</span>
-<span class="star" onclick="rate(3)">⭐</span>
-<span class="star" onclick="rate(4)">⭐</span>
-<span class="star" onclick="rate(5)">⭐</span>
-
-<div id="ratingMsg"></div>
-
-<!-- 💬 COMMENT SECTION -->
-<h3>💬 Comment Section</h3>
-
-<form action="https://formspree.io/f/xgopjwva" method="POST">
-  <input class="comment-box" name="name" placeholder="Your name" required><br><br>
-  <textarea class="comment-box" name="message" placeholder="Write your comment..." required></textarea><br>
-  <button class="btn" type="submit">Post 💬</button>
-</form>
-
-<div class="message">
-💚💛❤️ እንኳን በሰላም አደረሳችሁ<br><br>
-ከውድ ጉዋደኛቹ ዮናስ 🙏<br>
-መልካም በዓል ✨
-</div>
-
-<!-- ✅ ADDED SECTION -->
-<div class="message">
-<h3>💼 Our Mini Website Services</h3>
-
-We create custom mini celebration websites for:<br><br>
-
-🎉 ልደት (Birthday)<br>
-🎓 ምርቃት (Graduation)<br>
-💍 ሠርግ (Wedding)<br>
-👶 ክርስትና (Christening)<br>
-❤️ ፍቅር ጥያቄ (Love Proposal)<br>
-🎊 በዓል / Special Events<br>
-✨ and many more...<br><br>
-
-We make it fun, animated, and personalized just for you 😎🔥<br><br>
-
-🏢 Company Name: <span class="company-logo">NEXAsoftwaresolutions</span><br><br>
-
-📩 Contact us on Telegram:<br>
-@jonas64
-</div>
-
+    <div id="aboutPopup" class="popup">
+      <div class="popup-content">
+        <span class="close-x" onclick="closePopup('aboutPopup')">&times;</span>
+        <h3>💼 Our Mini Website Services</h3>
+        <p style="text-align: left;">
+          We create custom mini celebration websites for:<br><br>
+          🎉 ልደት (Birthday)<br>
+          🎓 ምርቃት (Graduation)<br>
+          💍 ሠርግ (Wedding)<br>
+          👶 ክርስትና (Christening)<br>
+          ❤️ ፍቅር ጥያቄ (Love Proposal)<br>
+          🎊 በዓል / Special Events<br>
+          ✨ and many more...<br><br>
+          We make it fun, animated, and personalized just for you 😎🔥<br><br>
+          🏢 Company Name: <span class="company-logo">NEXAsoftsolution</span><br><br>
+          📩 Contact us on Telegram:<br>
+          @jonas64
+        </p>
+        <button onclick="closePopup('aboutPopup')" class="btn">Close ❌</button>
+      </div>
+    </div>
 </div>
 
 <script>
-function goNext(){
-  document.getElementById("page1").style.display="none";
-  document.getElementById("page2").style.display="block";
-}
+function goNext(){ document.getElementById("page1").style.display="none"; document.getElementById("page2").style.display="block"; }
+function goBack(){ document.getElementById("page2").style.display="none"; document.getElementById("page1").style.display="block"; }
+function showPopup(id){ document.getElementById(id).style.display="block"; }
+function closePopup(id){ document.getElementById(id).style.display="none"; }
 
-function goBack(){
-  document.getElementById("page2").style.display="none";
-  document.getElementById("page1").style.display="block";
-}
+let round = 1, tries = 5, targetNumber = Math.floor(Math.random() * 100) + 1, gameActive = true;
 
-function showPopup(){
-  document.getElementById("popup").style.display="block";
-}
-
-function closePopup(){
-  document.getElementById("popup").style.display="none";
-}
-
-/* 🔥 ONLY CHANGE = HARD MODE 1–100 */
-let number = Math.floor(Math.random()*100)+1;
-let tries = 0;
-
-function checkGuess(){
+function checkGuess() {
+  if (!gameActive) return;
   let input = document.getElementById("guess").value;
+  let resultDiv = document.getElementById("result");
+  let statusDiv = document.getElementById("game-status");
+  if (input === "") { resultDiv.innerHTML = "⚠️ enter number first 😭"; return; }
+  let g = Number(input); tries--;
 
-  if(input === ""){
-    document.getElementById("result").innerHTML = "⚠️ enter number first 😭";
-    return;
-  }
-
-  let g = Number(input);
-  tries++;
-
-  if(g === number){
-    document.getElementById("result").innerHTML = "🏆🔥 YOU WIN!! 🎉😎";
-    return;
-  }
-
-  if(g < number){
-    document.getElementById("result").innerHTML = "📉 Too LOW ("+tries+"/5)";
+  if (g === targetNumber) {
+    resultDiv.innerHTML = "🏆🔥 YOU WIN!! 🎉😎";
+    document.getElementById("gift-section").style.display = "block";
+    saveToDB(`WIN - Round ${round} (Target: ${targetNumber})`);
+    gameActive = false;
+  } else if (tries > 0) {
+    resultDiv.innerHTML = g < targetNumber ? "📉 Too LOW ("+ (5-tries) +"/5)" : "📈 Too HIGH ("+ (5-tries) +"/5)";
+    statusDiv.innerHTML = `Round: ${round} | Chances left: ${tries}`;
   } else {
-    document.getElementById("result").innerHTML = "📈 Too HIGH ("+tries+"/5)";
+    saveToDB(`LOSS - Round ${round} (Target: ${targetNumber})`);
+    if (round === 1) {
+      round = 2; tries = 5; targetNumber = Math.floor(Math.random() * 100) + 1;
+      resultDiv.innerHTML = "Round 1 Over! Round 2 Started...";
+      statusDiv.innerHTML = `Round: ${round} | Chances left: ${tries}`;
+    } else {
+      resultDiv.innerHTML = "💀 GAME OVER!! Number was " + targetNumber;
+      gameActive = false;
+    }
   }
+}
 
-  if(tries >= 5){
-    document.getElementById("result").innerHTML = "💀 GAME OVER!! number was " + number;
-  }
+function saveToDB(entry) {
+    let db = JSON.parse(localStorage.getItem("celebration_db") || "[]");
+    db.push({ date: new Date().toLocaleString(), status: entry });
+    localStorage.setItem("celebration_db", JSON.stringify(db));
+    updateDBView();
+}
+
+function updateDBView() {
+    let db = JSON.parse(localStorage.getItem("celebration_db") || "[]");
+    let html = "<strong>-- SYSTEM RECORDS --</strong><br>";
+    if(db.length === 0) { html += "No entries found."; } 
+    else { db.forEach((item, index) => { html += `${index + 1}. [${item.date}] ${item.status}<br>`; }); }
+    document.getElementById("history-content").innerHTML = html;
+}
+
+function toggleHistory() {
+    let h = document.getElementById("history-content");
+    h.style.display = (h.style.display === "block") ? "none" : "block";
 }
 
 function rate(s){
   let stars = document.querySelectorAll(".star");
-  stars.forEach((st,i)=>{
-    st.classList.toggle("active", i < s);
-  });
-
- let msg = "";
-  if(s==1) msg="😭 WHY BRO WHY 💔";
-  if(s==2) msg="🙄😒 yoo you have problem with me?";
-  if(s==3) msg="😡🔪 make it up!";
-  if(s==4) msg="😃 just 1 more man!";
-  if(s==5) msg="😎 THANKS!! I DESERVE IT 🔥";
-
+  stars.forEach((st,i)=>{ st.classList.toggle("active", i < s); });
+  let msg = ["😭 WHY BRO WHY 💔", "🙄😒 yoo you have problem with me?", "😡🔪 make it up!", "😃 just 1 more man!", "😎 THANKS!! I DESERVE IT 🔥"][s-1];
   document.getElementById("ratingMsg").innerHTML = msg;
+  setTimeout(() => { showPopup('notifyPopup'); }, 1200);
 }
 </script>
-
 </body>
 </html>
