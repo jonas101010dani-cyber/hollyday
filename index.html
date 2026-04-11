@@ -159,7 +159,7 @@ body {
     overflow-y: auto;
 }
 
-/* Page 3 Styles */
+/* Page Style for Quiz Section */
 .quiz-container {
     text-align: left;
     background: rgba(255,255,255,0.08);
@@ -194,9 +194,37 @@ body {
 </div>
 
 <div id="page2" style="display:none; padding:20px;">
-    <h2>Welcome 🎉</h2>
+    <div class="title" style="font-size: 30px;">⛪ የትንሳኤ እውቀት መፈተኛ</div>
+    
+    <button class="btn about-btn" style="width: 90%; margin-bottom: 20px;" onclick="showPopup('fasikaPopup')">ስለ ፋሲካ በአል ትርጉም 📖</button>
+    
+    <div id="fasikaPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-x" onclick="closePopup('fasikaPopup')">&times;</span>
+            <h3>የፋሲካ (ትንሳኤ) ጥልቅ ትርጉም</h3>
+            <p style="text-align: justify; line-height: 1.6;">
+                ፋሲካ "ማለፍ" ማለት ነው። ይህም የእስራኤል ልጆች ከግብፅ ባርነት ወደ ነጻነት መሻገራቸውን እንዲሁም ጌታችን ኢየሱስ ክርስቶስ እኛን ከሞት ወደ ሕይወት፣ ከጨለማ ወደ ብርሃን ያሻገረበትን ታላቅ ምስጢር ይወክላል።<br><br>
+                በኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን፣ ትንሳኤ ከበዓላት ሁሉ በላይ "በዓለ በዓላት" ተብሎ ይጠራል። ለ55 ቀናት የሚቆየው የዐቢይ ጾም ተጠናቆ አማኞች በነጭ ልብስና በታላቅ ዝማሬ በአሉን ያከብራሉ።
+            </p>
+            <button onclick="closePopup('fasikaPopup')" class="btn">ተረዳሁ</button>
+        </div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>🧠 ፈታኝ የፋሲካ ጥያቄዎች</h3>
+        <p style="font-size: 13px; color: #aaa;">መልሱን ካሳሳቱ ማብራሪያው ይታይዎታል!</p>
+        <hr style="border: 0.5px solid #444;">
+        <div id="quiz-box"></div>
+    </div>
+
+    <button class="btn" onclick="goPage(1)">⬅ Back to Home</button>
+    <button class="btn" style="background: #28a745;" onclick="goPage(3)">Go to Fun Zone & Game 🎮</button>
+</div>
+
+<div id="page3" style="display:none; padding:20px;">
+    <h2>Welcome to the Fun Zone 🎉</h2>
     <button class="btn" onclick="showPopup('mainPopup')">Press Me 😏</button>
-    <button class="btn" onclick="goPage(1)">⬅ Back</button>
+    <button class="btn" onclick="goPage(2)">⬅ Back</button>
 
     <div id="mainPopup" class="popup">
       <div class="popup-content">
@@ -267,8 +295,6 @@ body {
     </div>
 
     <button class="btn about-btn" onclick="showPopup('aboutPopup')"><b>ABOUT US</b></button>
-    <br>
-    <button class="btn" style="background: #28a745; width: 80%; margin-top:15px;" onclick="goPage(3)">Go to Page 3 (Fasika Quiz) ⛪</button>
 
     <div id="aboutPopup" class="popup">
       <div class="popup-content">
@@ -293,51 +319,20 @@ body {
     </div>
 </div>
 
-<div id="page3" style="display:none; padding:20px;">
-    <div class="title" style="font-size: 30px;">⛪ የትንሳኤ እውቀት መፈተኛ</div>
-    
-    <button class="btn about-btn" style="width: 90%; margin-bottom: 20px;" onclick="showPopup('fasikaPopup')">ስለ ፋሲካ በአል ትርጉም 📖</button>
-    
-    <div id="fasikaPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-x" onclick="closePopup('fasikaPopup')">&times;</span>
-            <h3>የፋሲካ (ትንሳኤ) ጥልቅ ትርጉም</h3>
-            <p style="text-align: justify; line-height: 1.6;">
-                ፋሲካ "ማለፍ" ማለት ነው። ይህም የእስራኤል ልጆች ከግብፅ ባርነት ወደ ነጻነት መሻገራቸውን እንዲሁም ጌታችን ኢየሱስ ክርስቶስ እኛን ከሞት ወደ ሕይወት፣ ከጨለማ ወደ ብርሃን ያሻገረበትን ታላቅ ምስጢር ይወክላል።<br><br>
-                በኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ቤተ ክርስቲያን፣ ትንሳኤ ከበዓላት ሁሉ በላይ "በዓለ በዓላት" ተብሎ ይጠራል። ለ55 ቀናት የሚቆየው የዐቢይ ጾም ተጠናቆ አማኞች በነጭ ልብስና በታላቅ ዝማሬ በአሉን ያከብራሉ።
-            </p>
-            <button onclick="closePopup('fasikaPopup')" class="btn">ተረዳሁ</button>
-        </div>
-    </div>
-
-    <div class="quiz-container">
-        <h3>🧠 ፈታኝ የፋሲካ ጥያቄዎች</h3>
-        <p style="font-size: 13px; color: #aaa;">መልሱን ካሳሳቱ ማብራሪያው ይታይዎታል!</p>
-        <hr style="border: 0.5px solid #444;">
-        <div id="quiz-box"></div>
-    </div>
-
-    <button class="btn" onclick="goPage(2)">⬅ Back to Page 2</button>
-</div>
-
 <script>
 // --- NAVIGATION LOGIC ---
 function goPage(pageNo) {
     document.getElementById("page1").style.display = (pageNo === 1) ? "block" : "none";
     document.getElementById("page2").style.display = (pageNo === 2) ? "block" : "none";
     document.getElementById("page3").style.display = (pageNo === 3) ? "block" : "none";
-    if(pageNo === 3) loadQuiz();
-    window.scrollTo(0, 0); // Reset scroll to top
+    if(pageNo === 2) loadQuiz(); // Load quiz when page 2 is active
+    window.scrollTo(0, 0);
 }
-
-// These helpers ensure old calls still work
-function goNext() { goPage(2); }
-function goBack() { goPage(1); }
 
 function showPopup(id){ document.getElementById(id).style.display="block"; }
 function closePopup(id){ document.getElementById(id).style.display="none"; }
 
-// --- GAME LOGIC (PAGE 2) ---
+// --- GAME LOGIC (NOW PAGE 3) ---
 let round = 1, tries = 5, targetNumber = Math.floor(Math.random() * 100) + 1, gameActive = true;
 
 function checkGuess() {
@@ -398,7 +393,7 @@ function rate(s){
   setTimeout(() => { showPopup('notifyPopup'); }, 1200);
 }
 
-// --- HARD QUIZ LOGIC (PAGE 3) ---
+// --- HARD QUIZ DATA (NOW PAGE 2) ---
 const hardQuizData = [
     { 
         q: "ትንሳኤ ከበዓላት ሁሉ ቀዳሚ በመሆኑ ምን ተብሎ ይጠራል?", 
