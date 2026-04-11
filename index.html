@@ -178,6 +178,21 @@ body {
     display: none;
 }
 #score-summary { font-size: 26px; font-weight: bold; color: #00ffcc; margin-bottom: 10px; }
+
+/* Styles for the Database History */
+.db-history {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: left;
+    font-size: 12px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-family: monospace;
+}
+.db-entry { border-bottom: 1px solid #222; padding: 5px 0; color: #00ffcc; }
 </style>
 </head>
 
@@ -282,12 +297,17 @@ body {
     <button class="btn" onclick="checkGuess()">Guess</button>
     <div id="result"></div>
 
+    <div class="db-history" id="gameHistoryDB">
+        <div style="color: gold; margin-bottom: 5px;">[SYSTEM_LOG: Activity History]</div>
+        <div id="historyEntries">No records found.</div>
+    </div>
+
     <div id="gift-section" style="display:none; border: 2px dashed #ffcc00; margin: 20px auto; padding: 15px; background: rgba(255, 204, 0, 0.1); width: 85%;">
         <h3>🎁 Gift Claim Form</h3>
         <p>🥳እንኩዋን ደስ አለክ/ሽ አሸናፊ ሆነካል/ሽ 🥳</p>
-        <form action="https://formspree.io/f/xgopjwva" method="POST">
-            <input class="comment-box" name="gift_name" placeholder="Your Name" required><br>
-            <input class="comment-box" name="gift_request" placeholder="What gift do you want?" required><br>
+        <form id="giftForm" action="https://formspree.io/f/xgopjwva" method="POST" onsubmit="recordGoal()">
+            <input class="comment-box" id="winnerName" name="gift_name" placeholder="Your Name" required><br>
+            <input class="comment-box" id="winnerGoal" name="gift_request" placeholder="What gift do you want?" required><br>
             <button class="btn" type="submit">Submit Request 🎁</button>
         </form>
     </div>
@@ -336,11 +356,34 @@ body {
 </div>
 
 <script>
+// --- DATABASE / LEDGER LOGIC ---
+function saveToLedger(status, info) {
+    let ledger = JSON.parse(sessionStorage.getItem('activity_ledger') || "[]");
+    let timestamp = new Date().toLocaleTimeString();
+    ledger.unshift({ time: timestamp, status: status, info: info });
+    sessionStorage.setItem('activity_ledger', JSON.stringify(ledger.slice(0, 8))); 
+    updateLedgerUI();
+}
+
+function updateLedgerUI() {
+    let ledger = JSON.parse(sessionStorage.getItem('activity_ledger') || "[]");
+    let html = ledger.map(entry => `<div class="db-entry">[${entry.time}] ${entry.status}: ${entry.info}</div>`).join('');
+    document.getElementById("historyEntries").innerHTML = html || "No records found.";
+}
+
+// Function to store the user's specific Goal
+function recordGoal() {
+    const goal = document.getElementById("winnerGoal").value;
+    const name = document.getElementById("winnerName").value;
+    saveToLedger("GOAL_SET", `${name} requested: ${goal}`);
+}
+
 function goPage(pageNo) {
     document.getElementById("page1").style.display = (pageNo === 1) ? "block" : "none";
     document.getElementById("page2").style.display = (pageNo === 2) ? "block" : "none";
     document.getElementById("page3").style.display = (pageNo === 3) ? "block" : "none";
     if(pageNo === 2) loadQuiz();
+    if(pageNo === 3) updateLedgerUI();
     window.scrollTo(0, 0);
 }
 
@@ -355,7 +398,6 @@ function rate(s){
   let msgs = ["😭 WHY BRO WHY 💔", "🙄😒 yoo you have problem with me?", "😡🔪 make it up!", "😃 just 1 more man!", "😎 THANKS!! 🔥"];
   document.getElementById("ratingMsg").innerHTML = msgs[s-1];
 
-  // The Reminder Pop-up Logic
   setTimeout(() => {
       let reminderText = "";
       if (s <= 2) {
@@ -386,17 +428,22 @@ function checkGuess() {
   
   if (g === targetNumber) {
     res.innerHTML = "🏆 YOU WIN!!";
+    saveToLedger("RESULT", "WON: User reached the goal!");
     document.getElementById("gift-section").style.display = "block";
     gameActive = false;
   } else if (tries > 0) {
+    let hint = g < targetNumber ? "Low" : "High";
     res.innerHTML = g < targetNumber ? "📉 Too LOW" : "📈 Too HIGH";
     document.getElementById("game-status").innerHTML = `Round: ${round} | Chances left: ${tries}`;
   } else if (round === 1) {
     round = 2; tries = 5; targetNumber = Math.floor(Math.random() * 100) + 1;
     res.innerHTML = "Round 2 Started! Try again.";
+    saveToLedger("SYSTEM", "Round 1 failed. Moving to Round 2.");
     document.getElementById("game-status").innerHTML = `Round: 2 | Chances left: 5`;
   } else {
-    res.innerHTML = "💀 LOSS! Better luck next time."; gameActive = false;
+    res.innerHTML = "💀 LOSS! Better luck next time."; 
+    saveToLedger("RESULT", "LOST: User failed both rounds.");
+    gameActive = false;
   }
 }
 
@@ -487,8 +534,6 @@ function resetQuiz() {
     document.getElementById("quiz-result-area").style.display = "none";
     loadQuiz();
 }
-
-function updateDBView() {} 
 </script>
 </body>
 </html>
